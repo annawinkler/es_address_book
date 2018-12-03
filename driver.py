@@ -16,6 +16,7 @@ def main():
         ]
     )
 
-    my_house.validate()
+    # also called automatically when `.save()` is called
+    my_house.full_clean()
 
 main()
