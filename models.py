@@ -1,4 +1,4 @@
-from elasticsearch_dsl import Document, InnerDoc, Integer, Keyword, Nested
+from elasticsearch_dsl import Document, InnerDoc, Integer, Keyword, Nested, ValidationException
 
 
 class AddressParts(InnerDoc):
@@ -6,29 +6,15 @@ class AddressParts(InnerDoc):
     street_name = Keyword(required=True)
     city_name = Keyword(required=True)
 
-    def validate(self):
+    def clean(self):
         print('House number {} street name {} city name {}'.format(self.house_number, self.street_name, self.city_name))
         if self.house_number < 0:
-            raise RuntimeError('Not a valid house number!')
-        else:
-            return True
+            raise ValidationException('Not a valid house number!')
 
 
 class AddressData(InnerDoc):
     address_data = Nested(AddressParts, required=True)
 
-    def validate(self):
-        print("Validating address data...")
-        # AddressParts(**self.address_data.to_dict()).validate()
-        self.address_data.validate()
-        return True
-
 
 class House(Document):
     address = Nested(AddressData, required=True)
-
-    def validate(self):
-        print("Validating my house...")
-        # AddressData(**self.address.to_dict()).validate()
-        self.address.validate()
-        return True
