@@ -20,7 +20,8 @@ class AddressData(InnerDoc):
     def validate(self):
         print("Validating address data...")
         # AddressParts(**self.address_data.to_dict()).validate()
-        self.address_data.validate()
+        for part in self.address_data:
+            part.validate()
         return True
 
 
@@ -30,5 +31,6 @@ class House(Document):
     def validate(self):
         print("Validating my house...")
         # AddressData(**self.address.to_dict()).validate()
-        self.address.validate()
+        for a in self.address:
+            a.validate()
         return True
