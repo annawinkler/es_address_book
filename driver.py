@@ -19,4 +19,13 @@ def main():
     # also called automatically when `.save()` is called
     my_house.full_clean()
 
+    # clean also automatically wraps dicts in appropriate classes so this is
+    # also acceptable:
+    my_house = House(address=[{'address_data': [{
+                'house_number': 1023,
+                'street_name': "Main Street",
+                'city_name': "Anytown"
+            }]}])
+    my_house.full_clean()
+
 main()
