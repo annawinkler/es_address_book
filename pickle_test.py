@@ -22,7 +22,8 @@ def main():
     my_house.full_clean()
 
     out = pickle.loads(pickle.dumps(my_house))
-    out.full_clean()
+#    out.full_clean()
+    out.validate()
 
     # clean also automatically wraps dicts in appropriate classes so this is
     # also acceptable:
